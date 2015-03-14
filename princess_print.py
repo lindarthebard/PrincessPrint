@@ -1,43 +1,45 @@
 import sys,time
 
-# x= p_reply, col= num columns for lists, indent=extra indent, field=field name
-def princess_print(x,col=3,indent=0,field=''):
-	if 'type' in x:
-		x_type=x.pop('type')
-		princess_print(x_type,col,0,'Type: ')
-	if 'size' in x:
-		x_size=x.pop('size')
-		princess_print(x_size,col,0,'Size: ')
-	if 'body' in x:
-		x_body=x.pop('body')
-		princess_print(x_body,col,0,'Body: ')
-	if type(x) is dict:
+# Princess Print, a utility for pretty princess parseable pretty printing for pretty princesses.
+# 'x' is the object to be Princess Printed.
+# 'col' is the max number of columns.
+# 'order' is a list for specific ordering of keys.
+# 'indent' is the level of indentation.
+# 'field' is an optional field header or title, mostly used internally to pass keys as headers.
+def princess_print(x,col=3,order=[],indent=0,field=''):
+	if type(order) is list: # checks for ordering, processes those items first.
+		for n in order:
+			try:
+				princess_print(x[n],col,order,indent,field)
+			except KeyError:
+				pass
+	if type(x) is dict: # dictionary handling block.
 		for i,(k,v) in enumerate(sorted(x.iteritems())):
 			if i==0:
-				sys.stdout.write(' '*indent+field)
+				sys.stdout.write(' '*indent+field) # prints the key/field for the first item
 				indent+=len(field)
 			if type(v) is dict:
-				princess_print(v,col,indent,k+': ')
+				princess_print(v,col,order,indent,k+': ')
 			elif type(v) is list:
-				princess_print(v,col,indent,k+': ')
+				princess_print(v,col,order,indent,k+': ')
 			else:
 				if i==0:
-					princess_print(v,col,0,k+': ')
+					princess_print(v,col,order,0,k+': ')
 				else:
-					princess_print(v,col,indent,k+': ')
+					princess_print(v,col,order,indent,k+': ')
 		if indent==0:
 			sys.stdout.write('\n')
-	elif type(x) is list:
+	elif type(x) is list: # list handling block.
 		for i,n in enumerate(x):
 			if i==0:
-				sys.stdout.write(' '*indent+field)
+				sys.stdout.write(' '*indent+field) # prints the key/field for the first item
 			if type(n) is dict:
 				if i==0:
-					princess_print(n,col,0,field)
+					princess_print(n,col,order,0,field)
 				else:
-					princess_print(n,col,indent,field)
+					princess_print(n,col,order,indent,field)
 			elif type(n) is list:
-				princess_print(n,col,indent)
+				princess_print(n,col,order,indent)
 			else:
 				if i==0:
 					indent_char=''
@@ -60,7 +62,7 @@ def princess_print(x,col=3,indent=0,field=''):
 					sys.stdout.write('\n')
 		if indent==1:
 			sys.stdout.write('\n')
-	else:
+	else: # generic/string handling block.
 		if indent==0:
 			sys.stdout.write(' '*indent+field+'[ '+str(x)+' ]\n')
 			indent+=1
