@@ -57,7 +57,7 @@ def princess_print(x,col=3,order=[],indent=0,field=''):
 				elif i%col>=col-1:
 					spacer=spc2
 					nl='\n'
-				sys.stdout.write(ind_chr*indent+spacer+'[ '+n+' ]'+nl)
+				sys.stdout.write(' '*indent+spacer+'[ '+n+' ]'+nl)
 				if i==len(x)-1 and nl!=('\n'):
 					sys.stdout.write('\n')
 		if indent==1:
