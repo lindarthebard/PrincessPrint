@@ -6,7 +6,7 @@ import sys,time
 # 'order' is a list for specific ordering of keys.
 # 'indent' is the level of indentation.
 # 'field' is an optional field header or title, mostly used internally to pass keys as headers.
-def pripr(x,col=3,order=[],indent=0,field=''):
+def pripri(x,col=3,order=[],indent=0,field=''):
 	if type(order) is list: # checks for ordering, processes those items first.
 		for n in order:
 			try:
