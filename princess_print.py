@@ -1,6 +1,7 @@
 import sys,time
 
 # Princess Print, a utility for pretty princess parseable pretty printing for pretty princesses.
+# (...and my, you are looking quite lovely today!)
 # 'x' is the object to be Princess Printed.
 # 'col' is the max number of columns.
 # 'order' is a list for specific ordering of keys.
@@ -10,7 +11,7 @@ def pripri(x,col=3,order=[],indent=0,field=''):
 	if type(order) is list: # checks for ordering, processes those items first.
 		for n in order:
 			try:
-				princess_print(x[n],col,order,indent,field)
+				pripri(x[n],col,order,indent,field)
 			except KeyError:
 				pass
 	if type(x) is dict: # dictionary handling block.
@@ -19,14 +20,14 @@ def pripri(x,col=3,order=[],indent=0,field=''):
 				sys.stdout.write(' '*indent+field) # prints the key/field for the first item
 				indent+=len(field)
 			if type(v) is dict:
-				princess_print(v,col,order,indent,k+': ')
+				pripri(v,col,order,indent,k+': ')
 			elif type(v) is list:
-				princess_print(v,col,order,indent,k+': ')
+				pripri(v,col,order,indent,k+': ')
 			else:
 				if i==0:
-					princess_print(v,col,order,0,k+': ')
+					pripri(v,col,order,0,k+': ')
 				else:
-					princess_print(v,col,order,indent,k+': ')
+					pripri(v,col,order,indent,k+': ')
 		if indent==0:
 			sys.stdout.write('\n')
 	elif type(x) is list: # list handling block.
@@ -35,11 +36,11 @@ def pripri(x,col=3,order=[],indent=0,field=''):
 				sys.stdout.write(' '*indent+field) # prints the key/field for the first item
 			if type(n) is dict:
 				if i==0:
-					princess_print(n,col,order,0,field)
+					pripri(n,col,order,0,field)
 				else:
-					princess_print(n,col,order,indent,field)
+					pripri(n,col,order,indent,field)
 			elif type(n) is list:
-				princess_print(n,col,order,indent)
+				pripri(n,col,order,indent)
 			else:
 				if i==0:
 					indent_char=''
@@ -57,7 +58,7 @@ def pripri(x,col=3,order=[],indent=0,field=''):
 				elif i%col>=col-1:
 					spacer=spc2
 					nl='\n'
-				sys.stdout.write(' '*indent+spacer+'[ '+n+' ]'+nl)
+				sys.stdout.write(' '*indent+spacer+'[ '+str(n)+' ]'+nl)
 				if i==len(x)-1 and nl!=('\n'):
 					sys.stdout.write('\n')
 		if indent==1:
