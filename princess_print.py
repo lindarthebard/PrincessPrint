@@ -2,32 +2,29 @@ import sys,time
 
 # Princess Print, a utility for pretty princess parseable pretty printing for pretty princesses.
 # (...and my, you are looking quite lovely today!)
-# 'x' is the object to be Princess Printed.
-# 'col' is the max number of columns.
+# 'x' is the data to be Princess Printed.
+# --- Presently takes arbitrary combinations of lists, strings, ints, and dicts with no recursion limit. ---
 # 'order' is a list for specific ordering of keys.
+# 'col' is the max number of columns.
 # 'indent' is the level of indentation.
 # 'field' is an optional field header or title, mostly used internally to pass keys as headers.
-def pripri(x,col=3,order=[],indent=0,field=''):
-	if type(order) is list: # checks for ordering, processes those items first.
-		for n in order:
-			try:
-				pripri(x[n],col,order,indent,field)
-			except KeyError:
-				pass
+def pripri(x,order=[],col=3,indent=0,field=''):
 	if type(x) is dict: # dictionary handling block.
 		for i,(k,v) in enumerate(sorted(x.iteritems())):
+			if type(order) is list:
+				for n in order:
+					if n==k:
+						pripri
 			if i==0:
 				sys.stdout.write(' '*indent+field) # prints the key/field for the first item
 				indent+=len(field)
-			if type(v) is dict:
-				pripri(v,col,order,indent,k+': ')
-			elif type(v) is list:
-				pripri(v,col,order,indent,k+': ')
+			if type(v) is dict or type(v) is list:
+				pripri(v,order,col,indent,k+': ')
 			else:
 				if i==0:
-					pripri(v,col,order,0,k+': ')
+					pripri(v,[],col,0,k+': ')
 				else:
-					pripri(v,col,order,indent,k+': ')
+					pripri(v,[],col,indent,k+': ')
 		if indent==0:
 			sys.stdout.write('\n')
 	elif type(x) is list: # list handling block.
@@ -36,11 +33,11 @@ def pripri(x,col=3,order=[],indent=0,field=''):
 				sys.stdout.write(' '*indent+field) # prints the key/field for the first item
 			if type(n) is dict:
 				if i==0:
-					pripri(n,col,order,0,field)
+					pripri(n,order,col,0,field)
 				else:
-					pripri(n,col,order,indent,field)
+					pripri(n,order,col,indent,field)
 			elif type(n) is list:
-				pripri(n,col,order,indent)
+				pripri(n,order,col,indent)
 			else:
 				if i==0:
 					indent_char=''
