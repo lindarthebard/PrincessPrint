@@ -9,12 +9,14 @@ import sys,time
 # 'indent' is the level of indentation.
 # 'field' is an optional field header or title, mostly used internally to pass keys as headers.
 def pripri(x,order=[],col=3,indent=0,field=''):
+	if type(order) is list:
+		for n in order:
+			if type(x) is dict and n in x.iterkeys():
+				pop=x.pop(n)
+				pripri(pop,order,col,indent,n+': ')
 	if type(x) is dict: # dictionary handling block.
 		for i,(k,v) in enumerate(sorted(x.iteritems())):
-			if type(order) is list:
-				for n in order:
-					if n==k:
-						pripri
+			k=str(k)
 			if i==0:
 				sys.stdout.write(' '*indent+field) # prints the key/field for the first item
 				indent+=len(field)
@@ -40,7 +42,6 @@ def pripri(x,order=[],col=3,indent=0,field=''):
 				pripri(n,order,col,indent)
 			else:
 				if i==0:
-					indent_char=''
 					nl=''
 					spacer=''
 					spc2=' '*(10-(len(str(n))))
