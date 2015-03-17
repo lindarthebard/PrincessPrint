@@ -17,8 +17,8 @@ def pripri(x,order=[],col=3,indent=0,field=''):
 	if type(x) is dict: # dictionary handling block.
 		for i,(k,v) in enumerate(sorted(x.iteritems())):
 			k=str(k)
-			if i==0:
-				sys.stdout.write(' '*indent+field) # prints the key/field for the first item
+			if i==0 and field!='*':
+				sys.stdout.write(' '*indent+field) # prints key/field for first item
 				indent+=len(field)
 			if type(v) is dict or type(v) is list:
 				pripri(v,order,col,indent,k+': ')
@@ -32,31 +32,37 @@ def pripri(x,order=[],col=3,indent=0,field=''):
 	elif type(x) is list: # list handling block.
 		for i,n in enumerate(x):
 			if i==0:
-				sys.stdout.write(' '*indent+field) # prints the key/field for the first item
-			if type(n) is dict:
+				sys.stdout.write(' '*indent+field) # prints key/field for first item
+			if type(n) is dict or type(n) is list:
 				if i==0:
-					pripri(n,order,col,0,field)
+					pripri(n,order,col,len(field))
 				else:
-					pripri(n,order,col,indent,field)
-			elif type(n) is list:
-				pripri(n,order,col,indent)
+					pripri(n,order,col,indent,' '*len(field))
 			else:
+				try:
+					spc2
+				except NameError:
+					spc2=''
 				if i==0:
+					tab=0
 					nl=''
 					spacer=''
 					spc2=' '*(10-(len(str(n))))
 				elif i%col==0 and i!=0:
+					tab=indent
 					nl=''
 					spacer=' '*len(field)
 					spc2=' '*(10-(len(str(n))))
 				elif col-1 > i%col > 0:
+					tab=indent
 					nl=''
 					spacer=spc2
 					spc2=' '*(10-(len(str(n))))
 				elif i%col>=col-1:
+					tab=indent
 					spacer=spc2
 					nl='\n'
-				sys.stdout.write(' '*indent+spacer+'[ '+str(n)+' ]'+nl)
+				sys.stdout.write(' '*tab+spacer+'[ '+str(n)+' '+str(i)+' ]'+nl)
 				if i==len(x)-1 and nl!=('\n'):
 					sys.stdout.write('\n')
 		if indent==1:
