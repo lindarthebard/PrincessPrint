@@ -1,7 +1,8 @@
-Meant to semi-sensibly print dictionaries and/or lists to arbitrary depths.
+Princess Print: For Pretty Printing and the Pretty Princesses Who Print Pretty Things (Prettily)
 
 (Written in Python 2.7)
 
-Pulled from another project after realising that this could be reused in the future and may be helpful for others to have available. Definitely needs work, especially considering it was yanked out of another project and only slightly generalised.
+Presently able to handle dictionaries, lists, strings, and integers to as deep as your system will allow.
+Will likely improve with time and more sample sizes.
 
-If you have any helpful suggestions or criticisms, I'd love to hear about them! Cheers!
+Criticism is welcome! Let me know what you think and if you encounter anything you especially like or dislike!
