@@ -35,7 +35,7 @@ def pripri(x,order=[],col=3,indent=0,field=''):
 				sys.stdout.write(' '*indent+field) # prints key/field for first item
 			if type(n) is dict or type(n) is list:
 				if i==0:
-					pripri(n,order,col,len(field))
+					pripri(n,order,col,len(field),'*')
 				else:
 					pripri(n,order,col,indent,' '*len(field))
 			else:
@@ -44,25 +44,21 @@ def pripri(x,order=[],col=3,indent=0,field=''):
 				except NameError:
 					spc2=''
 				if i==0:
-					tab=0
 					nl=''
 					spacer=''
 					spc2=' '*(10-(len(str(n))))
 				elif i%col==0 and i!=0:
-					tab=indent
 					nl=''
-					spacer=' '*len(field)
+					spacer=' '*indent+' '*len(field)
 					spc2=' '*(10-(len(str(n))))
 				elif col-1 > i%col > 0:
-					tab=indent
 					nl=''
 					spacer=spc2
 					spc2=' '*(10-(len(str(n))))
 				elif i%col>=col-1:
-					tab=indent
 					spacer=spc2
 					nl='\n'
-				sys.stdout.write(' '*tab+spacer+'[ '+str(n)+' '+str(i)+' ]'+nl)
+				sys.stdout.write(spacer+'[ '+str(n)+' ]'+nl)
 				if i==len(x)-1 and nl!=('\n'):
 					sys.stdout.write('\n')
 		if indent==1:
